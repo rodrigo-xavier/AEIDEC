@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    environment:
+      TZ: ${TZ}
+      PMA_HOSTS: ${HOST}:${MYSQL_PORT0}, ${HOST}:${MYSQL_PORT1}, ${HOST}:${MYSQL_PORT2}, ${HOST}:${MYSQL_PORT3}, ${HOST}:${MYSQL_PORT4}, ${HOST}:${MYSQL_PORT5}, ${HOST}:${MYSQL_PORT6}, ${HOST}:${MYSQL_PORT7}, ${HOST}:${MYSQL_PORT8}, ${HOST}:${MYSQL_PORT9}
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+      HIDE_PHP_VERSION: 1
+    ports:
+      # - "127.0.0.1:8010:80"
+      - "${HOST}:8010:80"

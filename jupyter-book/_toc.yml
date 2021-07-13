@@ -1,0 +1,18 @@
+format: jb-book
+root: index # Página index
+parts:
+- caption: "Example 1"
+  chapters:
+  - file: example/example
+    sections:
+    - file: example/example
+    - file: example/example
+  - file: example/example
+    sections:
+    - file: example/example
+    - file: example/example
+  - file: example/example
+- caption: "Example 2"
+  chapters:
+  - file: example/example
+  - file: example/example

@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  jupyter-book:
+    image: jbook
+    volumes:
+      - .:/home/
+    command: jupyter-book build /home/
+    restart: always
+
+  httpd:
+    image: httpd:latest
+    volumes:
+      - ./_build/html/:/usr/local/apache2/htdocs/
+    restart: always
+    ports:
+      - "127.0.0.1:8000:80"
