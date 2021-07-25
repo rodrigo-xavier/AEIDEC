@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+  db:
+    image: mariadb:latest
+    volumes:
+      - ./db:/var/lib/mysql
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+      MYSQL_ROOT_HOST: ${HOST}:${HOST_PORT}
+      MYSQL_DATABASE: ${REMOTE_MYSQL_DATABASE_NAME}
+      MYSQL_USER: ${REMOTE_MYSQL_USER}
+      MYSQL_PASSWORD: ${REMOTE_MYSQL_PASSWORD}
+    ports:
+      - "${LOCALHOST}:${REMOTE_DATABASE_PORT}:80"
+    hostname: ${LOCALHOST}
+    extra_hosts:
+      - "${HOST}:${LOCALHOST}"
+    networks:
+      - wordpress-network
+
+  wordpress:
+    image: wordpress:latest
+    volumes:
+      - ./wp:/var/www/html
+      - ./config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    restart: always
+    env_file: .env
+    environment:
+      WORDPRESS_DB_HOST: ${HOST}:${HOST_PORT}
+      WORDPRESS_DB_NAME: ${REMOTE_MYSQL_DATABASE_NAME}
+      WORDPRESS_DB_USER: ${REMOTE_MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${REMOTE_MYSQL_PASSWORD}
+    ports:
+      - "${LOCALHOST}:${WORDPRESS_PORT}:80"
+    hostname: ${LOCALHOST}
+    extra_hosts:
+      - "${HOST}:${LOCALHOST}"
+    networks:
+      - wordpress-network
+  
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_VERBOSE: ${REMOTE_MYSQL_DATABASE_NAME}
+      PMA_HOST: ${HOST}:${HOST_PORT}
+      PMA_USER: ${REMOTE_MYSQL_USER}
+      PMA_PASSWORD: ${REMOTE_MYSQL_PASSWORD}
+      HIDE_PHP_VERSION: 1
+    ports:
+      - "${LOCALHOST}:${PHPMYADMIN_PORT}:80"
+    hostname: ${LOCALHOST}
+    extra_hosts:
+      - "${HOST}:${LOCALHOST}"
+    networks:
+      - wordpress-network
+
+networks:
+  wordpress-network:
+    driver: bridge
