@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  jupyter-notebook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${HOST}:${JUPYTER_PORT}:8888"
+    restart: unless-stopped
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - RESTARTABLE=yes
+      - CHOWN_HOME=yes
+      - GRANT_SUDO=yes
+      - NB_UID=1000
+    volumes:
+      - ./notebooks:/home
