@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  scrapy:
+    build:
+      context: .
+      dockerfile: docker/scrapy/Dockerfile
+    volumes:
+      - ./scrapy:/code
+    env_file: .env
+    command: "chmod +x ../entrypoint.sh"

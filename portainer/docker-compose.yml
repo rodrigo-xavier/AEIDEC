@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   portainer-ce:
-    image: portainer/portainer-ce:2.6.1-alpine
+    image: portainer/portainer-ce:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer:/data
@@ -9,5 +9,5 @@ services:
     ports:
       # - "127.0.0.1:8001:9000"
       # - "127.0.0.1:8002:8000"
-      - "${HOST}:8001:9000"
-      - "${HOST}:8002:8000"
+      - "${HOST}:8600:9000"
+      - "${HOST}:8601:8000"

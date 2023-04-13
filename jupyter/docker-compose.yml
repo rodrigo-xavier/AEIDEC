@@ -1,0 +1,1 @@
+docker pull jupyter/datascience-notebook:latest
