@@ -1,16 +1,27 @@
 version: '3.8'
 services:
   jupyter-book:
-    image: jbook
+    build: .
     volumes:
-      - .:/home/
-    command: jupyter-book build /home/
+      - ./business-plan/:/jupyter/business-plan/
+      - ./Doc/:/jupyter/Doc/
+      - ./necronomicon/:/jupyter/necronomicon/
+      - ./NNASS-doc/:/jupyter/NNASS-doc/
+      - ./Separacao-de-Fonte-Sonora-Doc/:/jupyter/Separacao-de-Fonte-Sonora-Doc/
     restart: always
+    # command: jupyter-book toc migrate /home/_toc.yml -o /home/_toc.yml
 
   httpd:
     image: httpd:latest
     volumes:
-      - ./_build/html/:/usr/local/apache2/htdocs/
+      - ./:/usr/local/apache2/htdocs/
+      - ./business-plan/_build/html/:/usr/local/apache2/htdocs/business-plan/
+      - ./Doc/_build/html/:/usr/local/apache2/htdocs/Doc/
+      - ./necronomicon/_build/html/:/usr/local/apache2/htdocs/necronomicon/
+      - ./NNASS-doc/_build/html/:/usr/local/apache2/htdocs/NNASS-doc/
+      - ./Separacao-de-Fonte-Sonora-Doc/_build/html/:/usr/local/apache2/htdocs/Separacao-de-Fonte-Sonora-Doc/
     restart: always
     ports:
-      - "127.0.0.1:8000:80"
+      - "${HOST}:80"
+    depends_on:
+      - "jupyter-book"
