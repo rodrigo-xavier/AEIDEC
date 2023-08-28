@@ -1,0 +1,24 @@
+# Arquivos e pastas específicos do Node.js
+# node_modules
+
+# Arquivos e pastas gerados pela construção e execução do projeto
+*.pid
+*.seed
+*.pid.lock
+
+# Arquivos de configuração específicos do editor
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Outros arquivos e pastas a serem ignorados
+.dockerignore
+.git
+.gitignore
+*.md
+*.txt
+*.csv
